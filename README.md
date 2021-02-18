@@ -3,7 +3,7 @@ A parser for the BLOB column (ZSYNCPAYMENT) of the "CCEntitySync-api-squareup.co
 
 ## USAGE
 
-Copy the sqlite db to the folder where the exe file is. Run the exe. A message will appear notifying about the outcome. A report.csv file will be created in case everything works fine. Add the csv to an excel spreadsheet with UTF-8 encoding and set TAB as a delimiter. All the timestamps have been converted to UTC timezone. In case a key (csv header) is not found in on of the parsed BLOBs, the "KEY NOT FOUND" value will be written in the final csv report.
+Copy the sqlite db to the folder where the exe file resides. Run the exe. A message will appear notifying about the outcome. A report.csv file will be created in case everything worked fine. Add the csv to an excel spreadsheet with UTF-8 encoding and set TAB as a delimiter. All the timestamps have been converted to UTC timezone. In case a key (csv header) is not found in on of the parsed BLOBs, the "KEY NOT FOUND" value will be written in the final csv report.
 
 ## ERROR
 
