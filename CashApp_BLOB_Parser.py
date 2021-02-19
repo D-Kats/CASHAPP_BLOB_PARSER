@@ -17,9 +17,13 @@ conn.text_factory = bytes
 c = conn.cursor()
 data = c.execute('SELECT Z_PK, ZSYNCPAYMENT FROM ZPAYMENT')
 
+
+count = 0
 for row in data.fetchall():			
 	init = str(row[1], errors='ignore')
-	s = init[init.find('{'):init.rfind('}')+1]		
+	s = init[init.find('{'):init.rfind('}')+1]
+	if s.count('{')<s.count('}'):
+		s = s[:s.rfind('}',0,-1)+1]
 	try: #cathcing the json conversion
 		data = json.loads(s)
 		try: #catching the json keys parsing
@@ -148,7 +152,7 @@ if JSONErrorFlag:
 	ctypes.windll.user32.MessageBoxW(0, 'Error parsing the BLOBs...\nJSON_Error.log file created', 'Warning!', 1)		
 else:
 	with open('report.csv', 'w', encoding='utf-8', errors='ignore') as fout:
-		fout.write(csv)
+		fout.write(csv)	
 	if errorFlag:
 		with open('error.log', 'w', encoding='utf-8', errors='ignore') as foutError:
 			foutError.write(errorLog)
