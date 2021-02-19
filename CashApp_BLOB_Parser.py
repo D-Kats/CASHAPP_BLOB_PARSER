@@ -12,12 +12,14 @@ errorLog = 'Error converting rows with\n'
 csv = 'token\tauth_token\trole\tamount\tcurrency code\tpull_amount\tsender_payment_amount_in_default_currency\trecipient_payment_amount_in_default_currency\tstate\tnote\tinstrument_type\ttransaction_id\tcreated_at\tcaptured_at\treached_customer_at\tpaid_out_at\tdeposited_at\tdisplay_date\ttoken\tcard_brand\tbank_name\tdisplay_name'
 
 conn = sqlite3.connect('CCEntitySync-api.squareup.com.sqlite')
+
+conn.text_factory = bytes
 c = conn.cursor()
 data = c.execute('SELECT Z_PK, ZSYNCPAYMENT FROM ZPAYMENT')
 
-for row in data.fetchall():	
-	init = str(row[1], errors='ignore')	
-	s = init[init.find('{'):init.rfind('}')+1]	
+for row in data.fetchall():			
+	init = str(row[1], errors='ignore')
+	s = init[init.find('{'):init.rfind('}')+1]		
 	try: #cathcing the json conversion
 		data = json.loads(s)
 		try: #catching the json keys parsing
@@ -102,7 +104,7 @@ for row in data.fetchall():
 				csv += 'KEY NOT FOUND\t'
 			if 'display_date' in data:
 				t = data['display_date']
-				csv += f"({data['display_date']}) - {datetime.datetime.fromtimestamp(t/1000, tz=timezone.utc)}\t"
+				csv += f"{datetime.datetime.fromtimestamp(t/1000, tz=timezone.utc)} ({data['display_date']})\t"
 			else:
 				csv += 'KEY NOT FOUND\t'
 			if 'instrument' in data:
@@ -141,7 +143,7 @@ for row in data.fetchall():
 		JSONErrorLog += f'{e}'
 
 if JSONErrorFlag:
-	with open('JSON_Error.log', encoding='utf-8', errors='ignore') as foutJson:
+	with open('JSON_Error.log', 'w', encoding='utf-8', errors='ignore') as foutJson:
 		foutJson.write(JSONErrorLog)
 	ctypes.windll.user32.MessageBoxW(0, 'Error parsing the BLOBs...\nJSON_Error.log file created', 'Warning!', 1)		
 else:
@@ -149,7 +151,9 @@ else:
 		fout.write(csv)
 	if errorFlag:
 		with open('error.log', 'w', encoding='utf-8', errors='ignore') as foutError:
-			foutError.write(errorLog) 
-	ctypes.windll.user32.MessageBoxW(0, 'Script finished successfully!\nreport.csv file created', 'Success!', 1)
+			foutError.write(errorLog)
+		ctypes.windll.user32.MessageBoxW(0, 'Script finished with error!\nerror.log file created', 'Warning!', 1) 
+	else:
+		ctypes.windll.user32.MessageBoxW(0, 'Script finished successfully!\nreport.csv file created', 'Success!', 1)
 
 		 
