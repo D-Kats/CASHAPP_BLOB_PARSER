@@ -8,7 +8,7 @@ Add the csv to an excel spreadsheet with UTF-8 encoding and set TAB as a delimit
 
 ## DATA 
 
-The values that are being extracted from each BLOB of every record in the db are the following: Z_PK(not in the BLOB - Primary Key for identification of each recorded presented in the csv final report file), token, auth_token, role, amount (from amount key), currency code (from amount key), pull_amount, sender_payment_amount_in_default_currency, recipient_payment_amount_in_default_currency, state, note, instrument_type, transaction_id, created_at, captured_at, reached_customer_at, paid_out_at, deposited_at, display_date, token (from instrument key), card_brand (from instrument key), bank_name (from instrument key), display_name (from instrument key)
+The values that are being extracted from each BLOB of every record in the db are the following: Z_PK(not in the BLOB - Primary Key for identification of each record presented in the csv final report file), token, auth_token, role, amount (from amount key), currency code (from amount key), pull_amount, sender_payment_amount_in_default_currency, recipient_payment_amount_in_default_currency, state, note, instrument_type, transaction_id, created_at, captured_at, reached_customer_at, paid_out_at, deposited_at, display_date, token (from instrument key), card_brand (from instrument key), bank_name (from instrument key), display_name (from instrument key)
 
 
 ## ERROR
